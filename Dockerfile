@@ -1,7 +1,7 @@
-ARG ALPINE_VERSION=3.18
+ARG ALPINE_VERSION=3.10
 FROM alpine:${ALPINE_VERSION}
-LABEL Maintainer="Tim de Pater <code@trafex.nl>"
-LABEL Description="Lightweight container with Nginx 1.24 & PHP 8.2 based on Alpine Linux."
+LABEL Maintainer="Bluewindow Limited"
+LABEL Description="Lightweight container with Nginx 1.24 & PHP 7.4 based on Alpine Linux."
 # Setup document root
 WORKDIR /var/www/html
 
@@ -9,25 +9,26 @@ WORKDIR /var/www/html
 RUN apk add --no-cache \
   curl \
   nginx \
-  php82 \
-  php82-ctype \
-  php82-curl \
-  php82-dom \
-  php82-fileinfo \
-  php82-fpm \
-  php82-gd \
-  php82-intl \
-  php82-mbstring \
-  php82-mysqli \
-  php82-opcache \
-  php82-openssl \
-  php82-phar \
-  php82-session \
-  php82-tokenizer \
-  php82-xml \
-  php82-xmlreader \
-  php82-xmlwriter \
-  supervisor
+  php7 \
+  php7-ctype \
+  php7-curl \
+  php7-dom \
+  php7-fileinfo \
+  php7-fpm \
+  php7-gd \
+  php7-intl \
+  php7-mbstring \
+  php7-mysqli \
+  php7-opcache \
+  php7-openssl \
+  php7-phar \
+  php7-session \
+  php7-tokenizer \
+  php7-xml \
+  php7-xmlreader \
+  php7-xmlwriter \
+  supervisor && \
+  rm -rf /var/cache/apk/*
 
 # Configure nginx - http
 COPY config/nginx.conf /etc/nginx/nginx.conf
@@ -35,7 +36,7 @@ COPY config/nginx.conf /etc/nginx/nginx.conf
 COPY config/conf.d /etc/nginx/conf.d/
 
 # Configure PHP-FPM
-ENV PHP_INI_DIR /etc/php82
+ENV PHP_INI_DIR /etc/php7
 COPY config/fpm-pool.conf ${PHP_INI_DIR}/php-fpm.d/www.conf
 COPY config/php.ini ${PHP_INI_DIR}/conf.d/custom.ini
 
@@ -46,7 +47,7 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN chown -R nobody.nobody /var/www/html /run /var/lib/nginx /var/log/nginx
 
 # Create symlink for php
-RUN ln -s /usr/bin/php82 /usr/bin/php
+# RUN ln -s /usr/bin/php7 /usr/bin/php
 
 # Switch to use a non-root user from here on
 USER nobody

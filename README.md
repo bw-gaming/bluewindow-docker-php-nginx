@@ -3,6 +3,10 @@ Example PHP-FPM 8.2 & Nginx 1.24 container image for Docker, built on [Alpine Li
 
 Repository: https://github.com/TrafeX/docker-php-nginx
 
+## BlueWindow 
+
+ docker build --pull --no-cache --rm -f "Dockerfile" -t bluewindow/php7-nginx:latest "." 
+docker run -p 80:8080 bluewindow/php7-nginx
 
 * Built on the lightweight and secure Alpine Linux distribution
 * Multi-platform, supporting AMD4, ARMv6, ARMv7, ARM64
